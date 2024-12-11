@@ -51,6 +51,20 @@ public class PartiesService {
         }
         return partie.soumettreDecision(pseudo, decision);
     }
+
+
+    public boolean getGameStatus() {
+        return partie.isPartieTerminee();
+     }
+
+     public Integer getScore(String pseudo) {
+        return partie.getScore(pseudo);
+     }
+
+    public Integer getWinner(String pseudo) {
+        return partie.getWinner(pseudo);
+    }
+
     
     public boolean peutJouerTour() throws GameNotInitializedException {
         if (partie == null) {

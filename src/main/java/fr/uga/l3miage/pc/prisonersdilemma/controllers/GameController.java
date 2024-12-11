@@ -17,6 +17,10 @@ import fr.uga.l3miage.pc.prisonersdilemma.requests.DecisionRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.PseudoRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.StartGameRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.services.PartiesService;
+import jakarta.annotation.Generated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -120,18 +124,18 @@ public class GameController {
  
 
     @PostMapping("/soumettre-decision")
-    public ResponseEntity<String> soumettreDecision(@RequestBody DecisionRequest request) {
+    public ResponseEntity<Boolean> soumettreDecision(@RequestBody DecisionRequest request) {
         try {
 
             boolean success = partiesService.soumettreDecision(request.getPseudo(), Decision.valueOf(request.getDecision()));
             if (success) {
                 System.out.println("Décision soumise, pseudo: " + request.getPseudo() + ", decision: " + request.getDecision());
-                return ResponseEntity.ok("Décision soumise avec succès.");
+                return ResponseEntity.ok(true);
             } else {
-                return ResponseEntity.badRequest().body("Décision déjà soumise ou joueur non trouvé.");
+                return ResponseEntity.badRequest().body(false);
             }
         } catch (GameNotInitializedException e) {
-            return ResponseEntity.badRequest().body("La partie n'est pas initialisée.");
+            return ResponseEntity.badRequest().body(false);
         }
     }
 
@@ -156,5 +160,38 @@ public class GameController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }   
+
+    @GetMapping("/get-status") 
+    public ResponseEntity<Boolean> getGameStatus() {
+       try{
+            boolean status = partiesService.getGameStatus();
+            return ResponseEntity.ok(status);
+       }
+       catch(Exception e){
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+       }
+    }
+
+    @GetMapping("/get-score")
+    public ResponseEntity<Integer> getScore(@RequestParam String pseudo) {
+        try {
+            Integer score = partiesService.getScore(pseudo);
+            return ResponseEntity.ok(score);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/get-winner")
+    public ResponseEntity<Integer> getWinner(@RequestParam String pseudo) {
+        try {
+            Integer winner = partiesService.getWinner(pseudo);
+            return ResponseEntity.ok(winner);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    
 
 }
