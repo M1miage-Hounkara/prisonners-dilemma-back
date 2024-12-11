@@ -128,7 +128,7 @@ class GameControllerTest {
 
         mockMvc.perform(get("/api/player-count"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.playerCount").value(2));
+                .andExpect(jsonPath("$.count").value(2));
     }
 
     @Test
@@ -137,7 +137,7 @@ class GameControllerTest {
 
         mockMvc.perform(get("/api/player-count"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.playerCount").value(-1));
+                .andExpect(jsonPath("$.count").value(-1));
     }
 
     // Submit Decision Tests
