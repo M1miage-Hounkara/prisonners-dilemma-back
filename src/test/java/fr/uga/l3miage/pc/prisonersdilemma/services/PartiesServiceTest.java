@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategy;
 import fr.uga.l3miage.pc.prisonersdilemma.exceptions.GameNotInitializedException;
 import fr.uga.l3miage.pc.prisonersdilemma.exceptions.MaximumPlayersReachedException;
-import fr.uga.l3miage.pc.prisonersdilemma.modules.Partie;
 
 class PartiesServiceTest {
     @InjectMocks

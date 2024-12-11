@@ -1,5 +1,4 @@
 package fr.uga.l3miage.pc.prisonersdilemma.strategies;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;

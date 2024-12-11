@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
 
-public class GraduelTest {
+class GraduelTest {
 
     private Graduel graduel;
 
@@ -19,7 +19,7 @@ public class GraduelTest {
     }
 
     @Test
-    public void testPremiereDecision_Cooperer() {
+    void testPremiereDecision_Cooperer() {
         // Historique vide pour les deux joueurs
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -29,7 +29,7 @@ public class GraduelTest {
     }
 
     @Test
-    public void testCooperationContinue() {
+    void testCooperationContinue() {
         // Historique où les deux joueurs coopèrent toujours
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -43,7 +43,7 @@ public class GraduelTest {
     }
 
     @Test
-    public void testReactionTrahisonSimple() {
+    void testReactionTrahisonSimple() {
         // Joueur 2 trahit une fois
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -55,7 +55,7 @@ public class GraduelTest {
     }
 
     @Test
-    public void testReactionTrahisonMultiple() {
+    void testReactionTrahisonMultiple() {
         // Joueur 2 trahit deux fois de suite
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -70,7 +70,7 @@ public class GraduelTest {
     }
 
     @Test
-    public void testRetourCooperationApresTrahison() {
+    void testRetourCooperationApresTrahison() {
         // Joueur 2 trahit une fois, puis coopère
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -84,7 +84,7 @@ public class GraduelTest {
     }
 
     @Test
-    public void testPasDeReponseSansTrahison() {
+    void testPasDeReponseSansTrahison() {
         // Historique uniquement avec coopération
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
