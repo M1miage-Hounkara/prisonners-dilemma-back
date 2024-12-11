@@ -19,7 +19,7 @@ import fr.uga.l3miage.pc.prisonersdilemma.responses.PlayerDecisionDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.PlayerHistoryDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.SystemResponseDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.services.PartiesService;
-
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 @RequestMapping("/api")
 public class GameController {
