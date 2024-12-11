@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonersdilemma.StrategiesTest;
+package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.strategies.DonnantPourDeuxDonnantsEtAleatoire;
 
 class DonnantPourDeuxDonnantsEtAleatoireTest {
     private DonnantPourDeuxDonnantsEtAleatoire strategy;

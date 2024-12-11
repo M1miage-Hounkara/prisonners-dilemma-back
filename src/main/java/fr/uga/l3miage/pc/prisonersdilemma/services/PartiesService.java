@@ -1,8 +1,9 @@
 package fr.uga.l3miage.pc.prisonersdilemma.services;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.boot.autoconfigure.web.WebProperties.Resources.Chain.Strategy;
+import org.springframework.data.repository.query.parser.Part;
 import org.springframework.stereotype.Service;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
@@ -14,21 +15,26 @@ import fr.uga.l3miage.pc.prisonersdilemma.modules.Partie;
 
 @Service
 public class PartiesService {
-    private Partie partie;
+    private Optional<Partie> partie = Optional.empty();
 
     public void demarrerPartie(int nbTours) {
-        this.partie = new Partie(nbTours);
+        if(isGameStarted()) {
+            throw new IllegalStateException("Une partie est déjà en cours. Veuillez la terminer avant d'en démarrer une nouvelle.");
+        }
+        Partie new_partie = new Partie(nbTours);
+        this.partie = Optional.of(new_partie);
     }
 
     public boolean isGameStarted() {
-        return partie != null;
+        return !partie.isEmpty();
     }
 
-    public void addPlayer(String pseudo, boolean isConnected, String strategy) throws MaximumPlayersReachedException {
-        if (partie == null) {
-            throw new IllegalStateException("La partie n'a pas été initialisée. Veuillez démarrer une nouvelle partie.");
-        }
+    private Partie getPartie() throws GameNotInitializedException {
+        return partie.orElseThrow(() -> new GameNotInitializedException("La partie n'est pas initialisée."));
+    }
 
+    public void addPlayer(String pseudo, boolean isConnected, String strategy) throws MaximumPlayersReachedException, GameNotInitializedException {
+        Partie partie = getPartie();
         
         if (partie.getNbJoueurs() < 2) {
             partie.addJoueur(pseudo, isConnected, TypeStrategy.valueOf(strategy));
@@ -37,7 +43,8 @@ public class PartiesService {
         }
     }
 
-    public void abandonner(String pseudo, TypeStrategy typeStrategy) {
+    public void abandonner(String pseudo, TypeStrategy typeStrategy) throws GameNotInitializedException {
+        Partie partie = getPartie();
         Joueur joueur = partie.getJoueurs().stream()
                 .filter(j -> j.getName().equals(pseudo))
                 .findFirst()
@@ -46,48 +53,57 @@ public class PartiesService {
     }
 
     public boolean soumettreDecision(String pseudo, Decision decision) throws GameNotInitializedException {
-        if (partie == null) {
-            throw new GameNotInitializedException();
-        }
+        Partie partie = getPartie();
         return partie.soumettreDecision(pseudo, decision);
     }
 
 
-    public boolean getGameStatus() {
+    public boolean getGameStatus() throws GameNotInitializedException {
+        Partie partie = getPartie();
         return partie.isPartieTerminee();
      }
 
-     public Integer getScore(String pseudo) {
+     public Integer getScore(String pseudo) throws GameNotInitializedException {
+        Partie partie = getPartie();
         return partie.getScore(pseudo);
      }
 
-    public Integer getWinner(String pseudo) {
+    public Integer getWinner(String pseudo) throws GameNotInitializedException {
+        Partie partie = getPartie();
         return partie.getWinner(pseudo);
     }
 
     
     public boolean peutJouerTour() throws GameNotInitializedException {
-        if (partie == null) {
-            throw new GameNotInitializedException();
-        }
+        Partie partie = getPartie();
         return partie.peutJouerTour();
     }
 
-    public int getNumberOfPlayers() {
+    public int getNumberOfPlayers() throws GameNotInitializedException {
+        Partie partie = getPartie();
         return partie.getNbJoueurs(); 
     }
 
-    public boolean getDecisionOfOtherPlayer(String pseudo) {
+    public boolean getDecisionOfOtherPlayer(String pseudo) throws GameNotInitializedException {
+        Partie partie = getPartie();
         return partie.getDecisionOfOtherPlayer(pseudo);
     }
 
 
     public List<Decision> getHistorique(String pseudo) throws GameNotInitializedException {
+        Partie partie = getPartie();
         if (!isGameStarted()) {
             throw new GameNotInitializedException("La partie n'est pas initialisée.");
         }
     
         return partie.getHistorique(pseudo);
+    }
+
+    public void terminerPartie() {
+        if (partie.isEmpty()) {
+            throw new IllegalStateException("Aucune partie à terminer.");
+        }
+        partie = Optional.empty();
     }
     
 }

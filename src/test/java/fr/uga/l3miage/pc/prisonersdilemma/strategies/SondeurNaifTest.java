@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonersdilemma.StrategiesTest;
+package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,16 +10,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.strategies.SondeurRepentant;
 
-class SondeurRepentantTest {
-     private SondeurRepentant strategy;
+class SondeurNaifTest {
+    private SondeurNaif strategy;
     private ArrayList<Decision> historiqueJoueur1;
     private ArrayList<Decision> historiqueJoueur2;
 
     @BeforeEach
     public void setUp() {
-        strategy = new SondeurRepentant(new Random(0));
+        strategy = new SondeurNaif(new Random(0));
         historiqueJoueur1 = new ArrayList<>();
         historiqueJoueur2 = new ArrayList<>();
     }
@@ -27,14 +26,13 @@ class SondeurRepentantTest {
     @Test
     void testCooperateWhenEmptyHistory() {
         Decision decision = strategy.execute(historiqueJoueur1, historiqueJoueur2);
-        assertEquals(Decision.COOPERER, decision, "Devrait coopérer lorsque l'historique de l'adversaire est vide");
+        assertEquals(Decision.COOPERER, decision, "Devrait coopérer lorsque l'historique est vide");
     }
 
     @Test
     void testImitateLastDecisionWhenNoRandomTrahir() {
         historiqueJoueur2.add(Decision.TRAHIR);
         Decision decision = strategy.execute(historiqueJoueur1, historiqueJoueur2);
-        historiqueJoueur1.add(decision);
         assertEquals(Decision.TRAHIR, decision, "Devrait imiter la dernière décision de l'adversaire");
     }
 
@@ -42,24 +40,15 @@ class SondeurRepentantTest {
     void testRandomTrahirOccurs() {
         int betrayCount = 0;
         int iterations = 1000;
-        SondeurRepentant randRepentant = new SondeurRepentant();
+        SondeurNaif randNaif = new SondeurNaif();
         historiqueJoueur2.add(Decision.COOPERER);
 
         for (int i = 0; i < iterations; i++) {
-            Decision decision = randRepentant.execute(historiqueJoueur1, historiqueJoueur2);
-            historiqueJoueur1.add(decision);
+            Decision decision = randNaif.execute(historiqueJoueur1, historiqueJoueur2);
             if (decision == Decision.TRAHIR) {
                 betrayCount++;
             }
         }
-        assertTrue(betrayCount > 0.2 * iterations && betrayCount < 0.3 * iterations, "La fréquence des trahisons aléatoires devrait être proche de 25%");
-    }
-
-    @Test
-    void testRepentanceAfterBetrayalResponse() {
-        historiqueJoueur1.add(Decision.TRAHIR);
-        historiqueJoueur2.add(Decision.TRAHIR);
-        Decision decision = strategy.execute(historiqueJoueur1, historiqueJoueur2);
-        assertEquals(Decision.COOPERER, decision, "Devrait coopérer pour se repentir après une réponse de trahison de l'adversaire");
+        assertTrue(betrayCount > 0.20 * iterations && betrayCount < 0.3 * iterations, "La fréquence des trahisons aléatoires devrait être proche de 10%");
     }
 }

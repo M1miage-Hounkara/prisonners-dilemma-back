@@ -1,11 +1,10 @@
-package fr.uga.l3miage.pc.prisonersdilemma.StrategiesTest;
+package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.strategies.Aleatoire;
 
 class AleatoireTest {
     @Test

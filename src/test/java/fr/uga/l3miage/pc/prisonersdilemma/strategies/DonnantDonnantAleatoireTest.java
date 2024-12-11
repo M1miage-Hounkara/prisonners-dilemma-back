@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonersdilemma.StrategiesTest;
+package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,16 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.strategies.SondeurNaif;
-
-class SondeurNaifTest {
-    private SondeurNaif strategy;
+class DonnantDonnantAleatoireTest {
+    private DonnantDonnantAleatoire strategy;
     private ArrayList<Decision> historiqueJoueur1;
     private ArrayList<Decision> historiqueJoueur2;
 
     @BeforeEach
     public void setUp() {
-        strategy = new SondeurNaif(new Random(0));
+        strategy = new DonnantDonnantAleatoire(new Random(0));
         historiqueJoueur1 = new ArrayList<>();
         historiqueJoueur2 = new ArrayList<>();
     }
@@ -31,25 +29,27 @@ class SondeurNaifTest {
     }
 
     @Test
-    void testImitateLastDecisionWhenNoRandomTrahir() {
+    void testImitateLastDecisionWhenNoRandomDecision() {
         historiqueJoueur2.add(Decision.TRAHIR);
         Decision decision = strategy.execute(historiqueJoueur1, historiqueJoueur2);
         assertEquals(Decision.TRAHIR, decision, "Devrait imiter la dernière décision de l'adversaire");
     }
 
     @Test
-    void testRandomTrahirOccurs() {
-        int betrayCount = 0;
-        int iterations = 1000;
-        SondeurNaif randNaif = new SondeurNaif();
-        historiqueJoueur2.add(Decision.COOPERER);
+    void testRandomDecisionOccurs() {
+        DonnantDonnantAleatoire randomStrat = new DonnantDonnantAleatoire();
+        int cooperateCount = 0;
+        int iterations = 1000; 
+
+        historiqueJoueur2.add(Decision.TRAHIR);
 
         for (int i = 0; i < iterations; i++) {
-            Decision decision = randNaif.execute(historiqueJoueur1, historiqueJoueur2);
-            if (decision == Decision.TRAHIR) {
-                betrayCount++;
+            Decision decision = randomStrat.execute(historiqueJoueur1, historiqueJoueur2);
+            if (decision == Decision.COOPERER) {
+                cooperateCount++;
             }
         }
-        assertTrue(betrayCount > 0.20 * iterations && betrayCount < 0.3 * iterations, "La fréquence des trahisons aléatoires devrait être proche de 10%");
+
+        assertTrue(cooperateCount > 0.2 * iterations && cooperateCount < 0.30 * iterations, "La fréquence des décisions aléatoires devrait être proche de 50%");
     }
 }

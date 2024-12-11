@@ -55,7 +55,9 @@ public class GameController {
                 partiesService.demarrerPartie(nbTours); 
             }
 
-            partiesService.addPlayer(pseudo, isConnected, request.getStrategy());
+                partiesService.addPlayer(pseudo, isConnected, request.getStrategy());
+            } catch (GameNotInitializedException e) {
+                return ResponseEntity.badRequest().body(Map.of("message", "Le jeu n'est pas encore initialisé: " + e.getMessage()));
         } catch (MaximumPlayersReachedException e) {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
@@ -74,6 +76,8 @@ public class GameController {
             partiesService.abandonner(pseudo, TypeStrategy.valueOf(typeStrategy));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(Map.of("message", "Type de stratÃ©gie invalide: " + typeStrategy));
+        } catch (GameNotInitializedException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Le jeu n'est pas encore initialisé: " + e.getMessage()));
         }
         Map<String, String> response = new HashMap<>();
         response.put("message", pseudo + " a abandonnÃ© la partie");

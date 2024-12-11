@@ -1,12 +1,7 @@
 package fr.uga.l3miage.pc.prisonersdilemma.enums;
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
-
 public enum TypeStrategy {
     DEFAULT,
-    RANDOM,
-    COOPERATE,
-    BETRAY,
     DONNANT_DONNANT,
     DONNANT_DONNANT_ALEATOIRE,
     DONNANT_POUR_DEUX_DONNANTS_ALEATOIRE,
@@ -19,6 +14,10 @@ public enum TypeStrategy {
     TOUJOURS_TRAHIR,
     TOUJOURS_COOPERER,
     RANCUNIER,
+    PAVLOV,
+    PAVLOV_ALEATOIRE,
+    ADAPTATIVE,
+    GRADUEL,
     DONNANT_DONNANT_SOUPCONNEUX,
     RANCUNIER_DOUX
 }

@@ -1,4 +1,4 @@
-package fr.uga.l3miage.pc.prisonersdilemma.StrategiesTest;
+package fr.uga.l3miage.pc.prisonersdilemma.strategies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,16 +10,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.strategies.PacificateurNaif;
 
-class PacificateurNaifTest {
-    private PacificateurNaif strategy;
+class SondeurRepentantTest {
+     private SondeurRepentant strategy;
     private ArrayList<Decision> historiqueJoueur1;
     private ArrayList<Decision> historiqueJoueur2;
 
     @BeforeEach
     public void setUp() {
-        strategy = new PacificateurNaif(new Random(0));
+        strategy = new SondeurRepentant(new Random(0));
         historiqueJoueur1 = new ArrayList<>();
         historiqueJoueur2 = new ArrayList<>();
     }
@@ -31,7 +30,7 @@ class PacificateurNaifTest {
     }
 
     @Test
-    void testImitateLastDecisionWhenNoPacification() {
+    void testImitateLastDecisionWhenNoRandomTrahir() {
         historiqueJoueur2.add(Decision.TRAHIR);
         Decision decision = strategy.execute(historiqueJoueur1, historiqueJoueur2);
         historiqueJoueur1.add(decision);
@@ -39,26 +38,27 @@ class PacificateurNaifTest {
     }
 
     @Test
-    void testPacificationOccurs() {
-        int cooperateCount = 0;
+    void testRandomTrahirOccurs() {
+        int betrayCount = 0;
         int iterations = 1000;
-        PacificateurNaif randomStrat = new PacificateurNaif();
-        historiqueJoueur2.add(Decision.TRAHIR);
+        SondeurRepentant randRepentant = new SondeurRepentant();
+        historiqueJoueur2.add(Decision.COOPERER);
 
         for (int i = 0; i < iterations; i++) {
-            Decision decision = randomStrat.execute(historiqueJoueur1, historiqueJoueur2);
+            Decision decision = randRepentant.execute(historiqueJoueur1, historiqueJoueur2);
             historiqueJoueur1.add(decision);
-            if (decision == Decision.COOPERER) {
-                cooperateCount++;
+            if (decision == Decision.TRAHIR) {
+                betrayCount++;
             }
         }
-        assertTrue(cooperateCount > 0.2 * iterations && cooperateCount < 0.30 * iterations, "La fréquence des pacifications devrait être proche de 15%");
+        assertTrue(betrayCount > 0.2 * iterations && betrayCount < 0.3 * iterations, "La fréquence des trahisons aléatoires devrait être proche de 25%");
     }
 
     @Test
-    void testImitateAfterCooperation() {
-        historiqueJoueur2.add(Decision.COOPERER);
+    void testRepentanceAfterBetrayalResponse() {
+        historiqueJoueur1.add(Decision.TRAHIR);
+        historiqueJoueur2.add(Decision.TRAHIR);
         Decision decision = strategy.execute(historiqueJoueur1, historiqueJoueur2);
-        assertEquals(Decision.COOPERER, decision, "Devrait imiter la coopération de l'adversaire");
+        assertEquals(Decision.COOPERER, decision, "Devrait coopérer pour se repentir après une réponse de trahison de l'adversaire");
     }
 }
