@@ -28,7 +28,7 @@ class PartiesServiceTest {
     }
 
     @Test
-    void testAddPlayer() throws MaximumPlayersReachedException {
+    void testAddPlayer() throws MaximumPlayersReachedException, GameNotInitializedException {
         partiesService.demarrerPartie(10);
         partiesService.addPlayer("Player1", true, "TOUJOURS_COOPERER");
         assertEquals(1, partiesService.getNumberOfPlayers());
@@ -41,7 +41,7 @@ class PartiesServiceTest {
     }
 
     @Test
-    void testMaximumPlayersReached() throws MaximumPlayersReachedException {
+    void testMaximumPlayersReached() throws MaximumPlayersReachedException, GameNotInitializedException {
         partiesService.demarrerPartie(10);
         partiesService.addPlayer("Player1", true, "TOUJOURS_COOPERER");
         partiesService.addPlayer("Player2", true, "TOUJOURS_TRAHIR");
@@ -67,7 +67,7 @@ class PartiesServiceTest {
     }
 
     @Test
-    void testAbandonner() throws MaximumPlayersReachedException {
+    void testAbandonner() throws MaximumPlayersReachedException, GameNotInitializedException {
         partiesService.demarrerPartie(10);
         partiesService.addPlayer("Player1", true, "TOUJOURS_COOPERER");
         partiesService.addPlayer("Player2", true, "TOUJOURS_COOPERER");
