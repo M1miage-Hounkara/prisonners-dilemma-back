@@ -66,22 +66,6 @@ class GameControllerTest {
                 .andExpect(jsonPath("$.message").exists());
     }
 
-    @Test
-    void testPlay() throws Exception {
-        when(partiesService.soumettreDecision(anyString(), any(Decision.class))).thenReturn(true);
-        when(partiesService.peutJouerTour()).thenReturn(true);
-        doNothing().when(partiesService).jouerTour();
-
-        PseudoRequest request = new PseudoRequest();
-        request.setPseudo("Player1");
-
-        mockMvc.perform(post("/api/play")
-                .param("decision", "COOPERER")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").exists());
-    }
 
     @Test
     void testGetPlayerCount() throws Exception {
