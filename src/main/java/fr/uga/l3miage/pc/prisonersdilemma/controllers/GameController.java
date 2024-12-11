@@ -131,5 +131,10 @@ public class GameController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new PlayerHistoryDTO(null));
         }
-    }   
+    } 
+    
+    @DeleteMapping("/terminer")
+    public void terminerPartie() {
+        partiesService.terminerPartie();
+    }
 }
