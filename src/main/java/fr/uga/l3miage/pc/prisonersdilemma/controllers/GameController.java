@@ -17,7 +17,6 @@ import fr.uga.l3miage.pc.prisonersdilemma.requests.DecisionRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.PseudoRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.StartGameRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.services.PartiesService;
-import jakarta.annotation.Generated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -82,33 +81,6 @@ public class GameController {
     }
 
 
-    // @PostMapping("/play")
-    // public ResponseEntity<Map<String, String>> play(@RequestBody PseudoRequest request, @RequestParam String decision) throws GameNotInitializedException {
-    //     String pseudo = request.getPseudo();
-    //     Map<String, String> response = new HashMap<>();
-
-    //     try {
-    //         boolean success = partiesService.soumettreDecision(pseudo, Decision.valueOf(decision));
-
-    //         if (!success) {
-    //             return ResponseEntity.badRequest().body(Map.of("message", "Erreur lors de la soumission de la décision pour " + pseudo));
-    //         }
-
-    //         if (partiesService.peutJouerTour()) {
-    //             partiesService.jouerTour();
-    //             response.put("message", "Tour joué avec succès.");
-    //             return ResponseEntity.ok(response);
-    //         }
-
-    //         response.put("message", pseudo + " a joué " + decision + ". En attente de l'autre joueur.");
-    //         return ResponseEntity.ok(response);
-
-    //     } catch (IllegalArgumentException e) {
-    //         return ResponseEntity.badRequest().body(Map.of("message", "Erreur de décision: " + decision));
-    //     } catch (IllegalStateException e) {
-    //         return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
-    //     }
-    // }
 
     @GetMapping("/player-count")
     public ResponseEntity<Map<String, Integer>> getPlayerCount() {
