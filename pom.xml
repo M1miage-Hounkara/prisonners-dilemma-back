@@ -107,10 +107,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                            <configuration>
-                <mainClass>fr.uga.l3miage.pc.PrisonersDilemmaApplication</mainClass>
-                 <includeSystemScope>true</includeSystemScope>
-            </configuration>
             </plugin>
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
@@ -125,16 +121,6 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
             <version>3.2.0</version>
-            <configuration>
-                <includes>
-                    <include>fr/uga/l3miage/pc/prisonersdilemma/strategies/**</include>
-                    <include>fr/uga/l3miage/pc/prisonersdilemma/interfaces/**</include>
-                </includes>
-                <excludes>
-                    <exclude>fr/uga/l3miage/pc/prisonersdilemma/strategies/StrategyFactory.class</exclude>
-                    <exclude>fr/uga/l3miage/pc/prisonersdilemma/strategies/StrategyFactory$1.class</exclude>
-                </excludes>
-            </configuration>
         </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
