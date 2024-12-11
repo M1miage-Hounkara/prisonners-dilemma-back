@@ -16,6 +16,9 @@ public class PartiesService {
     private Partie partie;
 
     public void demarrerPartie(int nbTours) {
+        if(this.partie != null) {
+            throw new IllegalStateException("Une partie est déjà en cours. Veuillez la terminer avant d'en démarrer une nouvelle.");
+        }
         this.partie = new Partie(nbTours);
     }
 
