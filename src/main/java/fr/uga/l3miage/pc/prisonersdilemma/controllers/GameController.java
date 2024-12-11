@@ -15,7 +15,6 @@ import fr.uga.l3miage.pc.prisonersdilemma.requests.DecisionRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.PseudoRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.requests.StartGameRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.CountDTO;
-import fr.uga.l3miage.pc.prisonersdilemma.responses.PlayerCountDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.PlayerDecisionDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.PlayerHistoryDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.responses.SystemResponseDTO;
