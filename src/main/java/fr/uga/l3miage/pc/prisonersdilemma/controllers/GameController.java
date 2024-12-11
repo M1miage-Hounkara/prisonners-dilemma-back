@@ -57,7 +57,7 @@ public class GameController {
             return ResponseEntity.ok(new SystemResponseDTO(
                 request.getPseudo() + " a rejoint la partie"
             ));
-        } catch (MaximumPlayersReachedException e) {
+        } catch (MaximumPlayersReachedException | GameNotInitializedException e) {
             return ResponseEntity.badRequest().body(
                 new SystemResponseDTO(e.getMessage())
             );
@@ -72,7 +72,7 @@ public class GameController {
             return ResponseEntity.ok(new SystemResponseDTO(
                 pseudo + " a abandonné la partie"
             ));
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException  | GameNotInitializedException e) {
             return ResponseEntity.badRequest().body(
                 new SystemResponseDTO("Type de stratégie invalide: " + typeStrategy)
             );
