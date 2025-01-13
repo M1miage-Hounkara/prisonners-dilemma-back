@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -235,4 +236,69 @@ class GameControllerTest {
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.history").isEmpty());
     }
+
+    @Test
+void testGetScoreSuccess() throws Exception {
+    when(partiesService.getScore(anyString())).thenReturn(100);
+
+    mockMvc.perform(get("/api/get-score")
+            .param("pseudo", "player1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.count").value(100));
+}
+
+@Test
+void testGetScoreFailure() throws Exception {
+    when(partiesService.getScore(anyString())).thenThrow(new RuntimeException("Error"));
+
+    mockMvc.perform(get("/api/get-score")
+            .param("pseudo", "player1"))
+            .andExpect(status().isInternalServerError());
+}
+
+@Test
+void testGetWinnerSuccess() throws Exception {
+    when(partiesService.getWinner(anyString())).thenReturn(1);
+
+    mockMvc.perform(get("/api/get-winner")
+            .param("pseudo", "player1"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.count").value(1));
+}
+
+@Test
+void testGetWinnerFailure() throws Exception {
+    when(partiesService.getWinner(anyString())).thenThrow(new RuntimeException("Error"));
+
+    mockMvc.perform(get("/api/get-winner")
+            .param("pseudo", "player1"))
+            .andExpect(status().isInternalServerError());
+}
+
+@Test
+void testTerminerPartieSuccess() throws Exception {
+    mockMvc.perform(delete("/api/terminer"))
+            .andExpect(status().isOk());
+
+    verify(partiesService).terminerPartie();
+}
+
+@Test
+void testGetGameStatusSuccess() throws Exception {
+    when(partiesService.getGameStatus()).thenReturn(true);
+
+    mockMvc.perform(get("/api/get-status"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$").value(true));
+}
+
+@Test
+void testGetGameStatusFailure() throws Exception {
+    when(partiesService.getGameStatus()).thenThrow(new RuntimeException("Error"));
+
+    mockMvc.perform(get("/api/get-status"))
+            .andExpect(status().isInternalServerError())
+            .andExpect(jsonPath("$").value(false));
+}
+
 }
