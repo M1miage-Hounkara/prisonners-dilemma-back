@@ -211,7 +211,6 @@ public class Partie {
     
         boolean allDecisionsMade = joueurs.stream()
                 .allMatch(joueur -> historiqueDecisionsMap.get(joueur.getName()).size() == nbTours);
-    
         if (allDecisionsMade) {
             partieTerminee = true;
             return true;
