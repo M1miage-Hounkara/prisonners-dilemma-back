@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.prisonersdilemma.domain.strategies;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
@@ -21,7 +21,7 @@ public class DonnantDonnantAleatoire implements Strategy {
     }
 
     @Override
-    public Decision execute(ArrayList<Decision> historiqueJoueur1, ArrayList<Decision> historiqueJoueur2) {
+    public Decision execute(List<Decision> historiqueJoueur1, List<Decision> historiqueJoueur2) {
         if (random.nextDouble() < 0.5) {
             return random.nextBoolean() ? Decision.COOPERER : Decision.TRAHIR;
         }

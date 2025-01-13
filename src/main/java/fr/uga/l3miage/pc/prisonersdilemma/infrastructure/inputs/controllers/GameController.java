@@ -48,8 +48,9 @@ public class GameController {
         boolean isConnected = request.isConnected();
 
         try {
-            
-            partiesService.demarrerPartie(nbTours); 
+            if (!partiesService.isGameStarted()){
+                partiesService.demarrerPartie(nbTours);
+            } 
             partiesService.addPlayer(pseudo, isConnected, request.getStrategy());
 
             return ResponseEntity.ok(new SystemResponseDTO(

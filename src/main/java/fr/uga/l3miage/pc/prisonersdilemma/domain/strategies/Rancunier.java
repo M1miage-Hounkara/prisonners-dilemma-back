@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.prisonersdilemma.domain.strategies;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.interfaces.Strategy;
@@ -11,7 +11,7 @@ public class Rancunier implements Strategy{
     protected boolean trahison = false;
 
     @Override
-    public Decision execute(ArrayList<Decision> historiqueJoueur1, ArrayList<Decision> historiqueJoueur2){
+    public Decision execute(List<Decision> historiqueJoueur1, List<Decision> historiqueJoueur2){
         setTrahison(historiqueJoueur2);
         if(trahison){
             return Decision.TRAHIR;
@@ -19,7 +19,7 @@ public class Rancunier implements Strategy{
         return Decision.COOPERER;
     }
 
-    protected void setTrahison(ArrayList<Decision> historiqueJoueur2){
+    protected void setTrahison(List<Decision> historiqueJoueur2){
         if(trahison || historiqueJoueur2.isEmpty()){
             return;
         }

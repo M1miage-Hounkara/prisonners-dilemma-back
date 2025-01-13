@@ -1,5 +1,6 @@
 package fr.uga.l3miage.pc.prisonersdilemma.domain.strategies;
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.interfaces.Strategy;
@@ -22,7 +23,7 @@ public class Adaptatif implements Strategy {
             initierStrategie.add(Decision.TRAHIR);
         }
     @Override
-    public Decision execute(ArrayList<Decision> historiqueJoueur1, ArrayList<Decision> historiqueJoueur2) {
+    public Decision execute(List<Decision> historiqueJoueur1, List<Decision> historiqueJoueur2) {
         if(!initierStrategie.isEmpty()) {
             return initierStrategie.remove(0);
         }
@@ -32,7 +33,7 @@ public class Adaptatif implements Strategy {
         }
         return Decision.TRAHIR;
     }
-    private void updateMeanScore(ArrayList<Decision> historiqueJoueur1, ArrayList<Decision> historiqueJoueur2){
+    private void updateMeanScore(List<Decision> historiqueJoueur1, List<Decision> historiqueJoueur2){
         if(historiqueJoueur1.isEmpty() || historiqueJoueur2.isEmpty()) {
             return;
         }
@@ -44,7 +45,7 @@ public class Adaptatif implements Strategy {
         }
     }
 
-    private int getScore(ArrayList<Decision> historiqueJoueur1, ArrayList<Decision> historiqueJoueur2){
+    private int getScore(List<Decision> historiqueJoueur1, List<Decision> historiqueJoueur2){
         if(historiqueJoueur1.isEmpty() || historiqueJoueur2.isEmpty()) {
             return -1;
         }

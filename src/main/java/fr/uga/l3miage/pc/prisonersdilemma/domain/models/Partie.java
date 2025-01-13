@@ -65,7 +65,6 @@ public class Partie {
 
     public synchronized boolean soumettreDecision(String pseudo, Decision decision) {
         if (processingDecisions) {
-            System.out.println("Decisions are still being processed. Try again later.");
             return false;
         }
     
@@ -166,11 +165,6 @@ public class Partie {
             joueur1.ajouterScore(1);
             joueur2.ajouterScore(1);
         }
-    
-        System.out.println("Tour terminé. Scores mis à jour:");
-        System.out.println(joueur1.getName() + " score: " + joueur1.getScore());
-        System.out.println(joueur2.getName() + " score: " + joueur2.getScore());
-      
     }
     
 
@@ -180,22 +174,10 @@ public class Partie {
         
     }
 
-
     public synchronized boolean getDecisionOfOtherPlayer(String pseudo) {
-        if (processingDecisions) {
-            System.out.println("Decisions are still being processed. Try again later.");
+        if (processingDecisions || pseudo == null || pseudo.isEmpty()) {
             return false;
         }
-
-
-        Joueur joueur1 = joueurs.get(0);
-        Joueur joueur2 = joueurs.size() > 1 ? joueurs.get(1) : null;
-
-        int historiqueDecisionsMapSize1 = historiqueDecisionsMap.get(joueur1.getName()).size();
-        int historiqueDecisionsMapSize2 = joueur2 != null ? historiqueDecisionsMap.get(joueur2.getName()).size() : 0;
-
-    
-        System.out.println("Getting decision of other player for pseudo: " + pseudo);
     
         Joueur requestingPlayer = joueurs.stream()
                 .filter(j -> j.getName().equals(pseudo))
@@ -203,7 +185,6 @@ public class Partie {
                 .orElse(null);
     
         if (requestingPlayer == null) {
-            System.out.println("Requesting player not found.");
             return false;
         }
     
@@ -213,56 +194,37 @@ public class Partie {
                 .orElse(null);
     
         if (otherPlayer == null) {
-            System.out.println("Other player not found.");
             return false;
         }
     
         List<Decision> historique = historiqueDecisionsMap.get(otherPlayer.getName());
     
-        if (historique == null || historique.isEmpty()) {
-            System.out.println("Other player's decision history is empty.");
+        if (historique == null || historique.isEmpty() || tourActuel <= 1) {
             return false;
         }
-
-
     
-        if (tourActuel > 1) { 
-            
-        int previousTurnIndex = tourActuel - 2; 
+        int previousTurnIndex = tourActuel - 2;
+    
         if (previousTurnIndex >= historique.size() || historique.get(previousTurnIndex) == null) {
-            System.out.println("Other player's decision for the previous turn is not available.");
             return false;
         }
-        
-            if (historiqueDecisionsMapSize1 == historiqueDecisionsMapSize2) {
-                Decision previousTurnDecision = historique.get(previousTurnIndex);
-                System.out.println("Other player's decision for the previous turn: " + previousTurnDecision);
-                if (historiqueDecisionsMapSize1 == historiqueDecisionsMapSize2 && historiqueDecisionsMapSize1 == nbTours) {
-                    partieTerminee = true;
-                    
-                }        
-                return true;
-            }
-            else {
-                System.out.println("Other player's decision for the previous turn is not available.");
-                return false;
-            }
-        } else {
-            System.out.println("No previous turn available.");
-            return false;
+    
+        boolean allDecisionsMade = joueurs.stream()
+                .allMatch(joueur -> historiqueDecisionsMap.get(joueur.getName()).size() == nbTours);
+    
+        if (allDecisionsMade) {
+            partieTerminee = true;
+            return true;
         }
+    
+        return false;
     }
-    
-    
 
     public List<Decision> getHistorique(String pseudo) {
         return historiqueDecisionsMap.getOrDefault(pseudo, new ArrayList<>());
     }
 
     public void resetDecisions() {
-
-        System.out.println("Resetting decisions for all players.");
-
         for (Joueur j : joueurs) {
             j.setDecision(null);
         }

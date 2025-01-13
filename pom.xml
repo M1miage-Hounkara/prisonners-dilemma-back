@@ -9,7 +9,9 @@
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <sonar.host.url>http://im2ag-sonar.u-ga.fr:9000</sonar.host.url>
+        <sonar.host.url>https://im2ag-sonar.univ-grenoble-alpes.fr/</sonar.host.url>
+        <sonar.projectKey>fr.uga.miage.m1:dilemme_prisonnier_G_1_11</sonar.projectKey>
+        <sonar.login>sqp_ae77bd9a4296ff12a75055750d97f1ffa9344241</sonar.login>
     </properties>
 
     <parent>

@@ -24,12 +24,16 @@ public class PartiesService implements IPartieService {
         if(partieRepository.exists()) {
             throw new IllegalStateException("Une partie est déjà en cours. Veuillez la terminer avant d'en démarrer une nouvelle.");
         }
-        Partie new_partie = new Partie(nbTours);
-        partieRepository.save(new_partie);
+        Partie newPartie = new Partie(nbTours);
+        partieRepository.save(newPartie);
     }
 
     private Partie getPartie() throws GameNotInitializedException {
         return partieRepository.find().orElseThrow(() -> new GameNotInitializedException("La partie n'est pas initialisée."));
+    }
+
+    public boolean isGameStarted() {
+        return partieRepository.exists();
     }
 
     public void addPlayer(String pseudo, boolean isConnected, String strategy) throws MaximumPlayersReachedException, GameNotInitializedException {

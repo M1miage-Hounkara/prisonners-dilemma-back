@@ -2,6 +2,7 @@ package fr.uga.l3miage.pc.prisonersdilemma.domain.strategies;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
 import lombok.Getter;
@@ -11,7 +12,7 @@ public class RancunierDoux extends Rancunier {
     private ArrayList<Decision> punition = new ArrayList<>(Arrays.asList(Decision.TRAHIR,Decision.TRAHIR,Decision.TRAHIR,Decision.TRAHIR,Decision.COOPERER,Decision.COOPERER));
     private Integer count = 0;
     @Override
-    public Decision execute(ArrayList<Decision> historiqueJoueur1, ArrayList<Decision> historiqueJoueur2){
+    public Decision execute(List<Decision> historiqueJoueur1, List<Decision> historiqueJoueur2){
         setTrahison(historiqueJoueur2);
         if(trahison){
            Decision decision = punition.get(count);
@@ -22,7 +23,7 @@ public class RancunierDoux extends Rancunier {
     }
 
     @Override
-    protected void setTrahison(ArrayList<Decision> historiqueJoueur2){
+    protected void setTrahison(List<Decision> historiqueJoueur2){
         if(historiqueJoueur2.isEmpty()){
             return;
         }

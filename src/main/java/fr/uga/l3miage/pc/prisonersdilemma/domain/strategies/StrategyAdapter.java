@@ -1,6 +1,6 @@
 package fr.uga.l3miage.pc.prisonersdilemma.domain.strategies;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategy;
@@ -17,7 +17,7 @@ public class StrategyAdapter implements Strategy {
     }
 
     @Override
-    public Decision execute(ArrayList<Decision> owDecisions, ArrayList<Decision> opponentDecisions) {
+    public Decision execute(List<Decision> owDecisions, List<Decision> opponentDecisions) {
         Boolean choix = null;
         fr.uga.l3miage.pc.prisonersdilemma.models.strategies.Strategy strat = StrategyFactory.getStrategyInstance(this.strategyType.ordinal());
         choix = strat.play(adaptHistorique(owDecisions, opponentDecisions), PlayerRole.J1);
@@ -28,7 +28,7 @@ public class StrategyAdapter implements Strategy {
         return decision;
     }
 
-    private History adaptHistorique(ArrayList<Decision> owDecisions, ArrayList<Decision> opponentDecisions) {
+    private History adaptHistorique(List<Decision> owDecisions, List<Decision> opponentDecisions) {
         if (owDecisions.size() != opponentDecisions.size()) {
             throw new IllegalArgumentException("Les listes de décisions des deux joueurs doivent avoir la même taille !");
         }

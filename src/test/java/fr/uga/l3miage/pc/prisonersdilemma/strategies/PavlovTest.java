@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.Pavlov;
 
-public class PavlovTest {
+class PavlovTest {
 
     private Pavlov pavlov;
 
@@ -20,7 +20,7 @@ public class PavlovTest {
     }
 
     @Test
-    public void testPremiereDecision_Cooperer() {
+    void testPremiereDecision_Cooperer() {
         // Historique vide pour les deux joueurs
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -30,7 +30,7 @@ public class PavlovTest {
     }
 
     @Test
-    public void testDernierCoupGagnant_CoopereApresSuccesMutuel() {
+    void testDernierCoupGagnant_CoopereApresSuccesMutuel() {
         // Les deux joueurs ont coopéré dans le dernier tour
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -42,7 +42,7 @@ public class PavlovTest {
     }
 
     @Test
-    public void testDernierCoupGagnant_TrahitApresGain() {
+    void testDernierCoupGagnant_TrahitApresGain() {
         // Joueur 1 a trahi, Joueur 2 a coopéré dans le dernier tour
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -54,7 +54,7 @@ public class PavlovTest {
     }
 
     @Test
-    public void testDernierCoupPerdant_RetourCooperation() {
+    void testDernierCoupPerdant_RetourCooperation() {
         // Joueur 1 a trahi, mais Joueur 2 a également trahi dans le dernier tour
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -66,7 +66,7 @@ public class PavlovTest {
     }
 
     @Test
-    public void testCycleAlternanceGagnantPerdant() {
+    void testCycleAlternanceGagnantPerdant() {
         // Cas où les joueurs alternent entre gagner et perdre
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -88,7 +88,7 @@ public class PavlovTest {
     }
 
     @Test
-    public void testRetourCooperationApresDefaite() {
+    void testRetourCooperationApresDefaite() {
         // Joueur 1 coopère, Joueur 2 trahit plusieurs fois
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();

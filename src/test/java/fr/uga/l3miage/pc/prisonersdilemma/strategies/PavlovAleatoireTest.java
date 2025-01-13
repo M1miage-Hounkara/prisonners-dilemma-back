@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.PavlovAleatoire;
 
-public class PavlovAleatoireTest {
+class PavlovAleatoireTest {
 
     private PavlovAleatoire pavlovAleatoire;
 
@@ -20,7 +20,7 @@ public class PavlovAleatoireTest {
     }
 
     @Test
-    public void testComportementHeritePavlov() {
+    void testComportementHeritePavlov() {
         // Historique où Pavlov aurait une logique déterministe
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
@@ -48,7 +48,7 @@ public class PavlovAleatoireTest {
     }
 
     @Test
-    public void testDecisionsAleatoires() {
+    void testDecisionsAleatoires() {
         // Historique quelconque
         ArrayList<Decision> historiqueJoueur1 = new ArrayList<>();
         ArrayList<Decision> historiqueJoueur2 = new ArrayList<>();
