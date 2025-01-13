@@ -262,4 +262,17 @@ class PartiesServiceTest {
         assertThrows(GameNotInitializedException.class, 
             () -> partiesService.getDecisionOfOtherPlayer("Player1"));
     }
+
+
+    @Test
+    void testIsGameStartedWhenExistsReturnsTrue() {
+        when(partieRepository.exists()).thenReturn(true);
+        assertTrue(partiesService.isGameStarted(), "La méthode devrait retourner true si une partie existe.");
+    }
+
+    @Test
+    void testIsGameStartedWhenExistsReturnsFalse() {
+        when(partieRepository.exists()).thenReturn(false);
+        assertFalse(partiesService.isGameStarted(), "La méthode devrait retourner false si aucune partie n'existe.");
+    }
 }

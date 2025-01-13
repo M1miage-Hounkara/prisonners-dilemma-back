@@ -219,7 +219,7 @@ public class Partie {
     
         return false;
     }
-
+    
     public List<Decision> getHistorique(String pseudo) {
         return historiqueDecisionsMap.getOrDefault(pseudo, new ArrayList<>());
     }
