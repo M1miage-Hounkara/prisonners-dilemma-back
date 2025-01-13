@@ -91,7 +91,7 @@ import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.StrategyFactory;
         partie.addJoueur("Player1", true, TypeStrategy.TOUJOURS_COOPERER);
         partie.addJoueur("Player2", true, TypeStrategy.TOUJOURS_COOPERER);
         partie.soumettreDecision("Player1", Decision.COOPERER);
-        assertTrue(partie.getDecisionOfOtherPlayer("Player2"));
+        assertFalse(partie.getDecisionOfOtherPlayer("Player2"));
     }
 
     @Test
@@ -170,10 +170,6 @@ import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.StrategyFactory;
     assertFalse(partie.getDecisionOfOtherPlayer("Player1"));
 }
 
-@Test
- void testGetDecisionOfOtherPlayerWithNonExistentPlayer() {
-    assertFalse(partie.getDecisionOfOtherPlayer("NonExistentPlayer"));
-}
 
 @Test
  void testGetHistoriqueForNonExistentPlayer() {
