@@ -3,10 +3,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategy;
-import fr.uga.l3miage.pc.prisonersdilemma.interfaces.Strategy;
-import fr.uga.l3miage.pc.prisonersdilemma.strategies.StrategyFactory;
+
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategy;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.interfaces.Strategy;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.models.Joueur;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.models.Partie;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.StrategyFactory;
 
 
 

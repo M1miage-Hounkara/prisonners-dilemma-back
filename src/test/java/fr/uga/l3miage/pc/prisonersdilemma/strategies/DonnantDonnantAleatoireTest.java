@@ -9,7 +9,8 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.DonnantDonnantAleatoire;
 class DonnantDonnantAleatoireTest {
     private DonnantDonnantAleatoire strategy;
     private ArrayList<Decision> historiqueJoueur1;

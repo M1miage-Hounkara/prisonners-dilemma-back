@@ -1,13 +1,15 @@
 package fr.uga.l3miage.pc.prisonersdilemma.controllers;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategy;
-import fr.uga.l3miage.pc.prisonersdilemma.exceptions.GameNotInitializedException;
-import fr.uga.l3miage.pc.prisonersdilemma.exceptions.MaximumPlayersReachedException;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.DecisionRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.PseudoRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.requests.StartGameRequest;
-import fr.uga.l3miage.pc.prisonersdilemma.services.PartiesService;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.PartiesService;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategy;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.exceptions.GameNotInitializedException;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.exceptions.MaximumPlayersReachedException;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.controllers.GameController;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.requests.DecisionRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.requests.PseudoRequest;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.requests.StartGameRequest;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +69,6 @@ class GameControllerTest {
     @Test
     void testJoinGameSuccess() throws Exception {
         PseudoRequest request = new PseudoRequest("player1", 5, "ALEATOIRE", true);
-        
-        when(partiesService.isGameStarted()).thenReturn(false);
 
         mockMvc.perform(post("/api/join-game")
                 .contentType(MediaType.APPLICATION_JSON)

@@ -7,10 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.Decision;
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategy;
-import fr.uga.l3miage.pc.prisonersdilemma.exceptions.GameNotInitializedException;
-import fr.uga.l3miage.pc.prisonersdilemma.exceptions.MaximumPlayersReachedException;
+import fr.uga.l3miage.pc.prisonersdilemma.application.services.PartiesService;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategy;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.exceptions.GameNotInitializedException;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.exceptions.MaximumPlayersReachedException;
 
 class PartiesServiceTest {
     @InjectMocks

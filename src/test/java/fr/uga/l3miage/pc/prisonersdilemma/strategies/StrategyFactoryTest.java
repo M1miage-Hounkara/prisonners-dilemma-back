@@ -5,8 +5,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.uga.l3miage.pc.prisonersdilemma.enums.TypeStrategy;
-import fr.uga.l3miage.pc.prisonersdilemma.interfaces.Strategy;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategy;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.interfaces.Strategy;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.Adaptatif;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.Aleatoire;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.DonnantDonnant;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.DonnantDonnantAleatoire;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.DonnantDonnantSoupconneux;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.DonnantPourDeuxDonnants;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.DonnantPourDeuxDonnantsEtAleatoire;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.Graduel;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.PacificateurNaif;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.Pavlov;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.PavlovAleatoire;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.Rancunier;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.RancunierDoux;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.SondeurNaif;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.SondeurRepentant;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.StrategyFactory;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.ToujoursCooperer;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.ToujoursTrahir;
+import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.VraiPacificateur;
 
 public class StrategyFactoryTest {
 
