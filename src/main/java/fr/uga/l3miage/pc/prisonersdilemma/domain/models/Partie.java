@@ -176,76 +176,71 @@ public class Partie {
     
 
     public synchronized boolean getDecisionOfOtherPlayer(String pseudo) {
-        if (processingDecisions) {
-            System.out.println("Decisions are still being processed. Try again later.");
+        if (processingDecisions || pseudo == null || pseudo.isEmpty()) {
             return false;
         }
-
-
-        Joueur joueur1 = joueurs.get(0);
-        Joueur joueur2 = joueurs.size() > 1 ? joueurs.get(1) : null;
-
-        int historiqueDecisionsMapSize1 = historiqueDecisionsMap.get(joueur1.getName()).size();
-        int historiqueDecisionsMapSize2 = joueur2 != null ? historiqueDecisionsMap.get(joueur2.getName()).size() : 0;
-
     
-        System.out.println("Getting decision of other player for pseudo: " + pseudo);
-    
-        Joueur requestingPlayer = joueurs.stream()
-                .filter(j -> j.getName().equals(pseudo))
-                .findFirst()
-                .orElse(null);
-    
+        Joueur requestingPlayer = getPlayerByName(pseudo);
         if (requestingPlayer == null) {
-            System.out.println("Requesting player not found.");
             return false;
         }
     
-        Joueur otherPlayer = joueurs.stream()
-                .filter(j -> !j.getName().equals(pseudo))
-                .findFirst()
-                .orElse(null);
-    
+        Joueur otherPlayer = getOtherPlayer(pseudo);
         if (otherPlayer == null) {
-            System.out.println("Other player not found.");
             return false;
         }
     
         List<Decision> historique = historiqueDecisionsMap.get(otherPlayer.getName());
+        if (!isHistoriqueValid(historique)) {
+            return false;
+        }
     
-        if (historique == null || historique.isEmpty()) {
-            System.out.println("Other player's decision history is empty.");
-            return false;
-        }
-
-
-    
-        if (tourActuel > 1) { 
-            
-        int previousTurnIndex = tourActuel - 2; 
-        if (previousTurnIndex >= historique.size() || historique.get(previousTurnIndex) == null) {
-            System.out.println("Other player's decision for the previous turn is not available.");
-            return false;
-        }
-        
-            if (historiqueDecisionsMapSize1 == historiqueDecisionsMapSize2) {
-                Decision previousTurnDecision = historique.get(previousTurnIndex);
-                System.out.println("Other player's decision for the previous turn: " + previousTurnDecision);
-                if (historiqueDecisionsMapSize1 == historiqueDecisionsMapSize2 && historiqueDecisionsMapSize1 == nbTours) {
-                    partieTerminee = true;
-                    
-                }        
-                return true;
-            }
-            else {
-                System.out.println("Other player's decision for the previous turn is not available.");
-                return false;
-            }
-        } else {
-            System.out.println("No previous turn available.");
-            return false;
-        }
+        return processTurnLogic(historique);
     }
+    
+    private Joueur getPlayerByName(String name) {
+        return joueurs.stream()
+                .filter(j -> j.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+    
+    private Joueur getOtherPlayer(String pseudo) {
+        return joueurs.stream()
+                .filter(j -> !j.getName().equals(pseudo))
+                .findFirst()
+                .orElse(null);
+    }
+    
+    private boolean isHistoriqueValid(List<Decision> historique) {
+        return historique != null && !historique.isEmpty();
+    }
+    
+    private boolean processTurnLogic(List<Decision> historique) {
+        if (tourActuel <= 1) {
+            return false;
+        }
+    
+        int previousTurnIndex = tourActuel - 2;
+        if (previousTurnIndex >= historique.size() || historique.get(previousTurnIndex) == null) {
+            return false;
+        }
+    
+        int historiqueDecisionsMapSize1 = historiqueDecisionsMap.get(joueurs.get(0).getName()).size();
+        int historiqueDecisionsMapSize2 = joueurs.size() > 1
+                ? historiqueDecisionsMap.get(joueurs.get(1).getName()).size()
+                : 0;
+    
+        if (historiqueDecisionsMapSize1 == historiqueDecisionsMapSize2) {
+            if (historiqueDecisionsMapSize1 == nbTours) {
+                partieTerminee = true;
+            }
+            return true;
+        }
+    
+        return false;
+    }
+    
 
     public List<Decision> getHistorique(String pseudo) {
         return historiqueDecisionsMap.getOrDefault(pseudo, new ArrayList<>());
