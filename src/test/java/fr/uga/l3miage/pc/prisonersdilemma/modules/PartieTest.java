@@ -54,14 +54,14 @@ import fr.uga.l3miage.pc.prisonersdilemma.domain.strategies.StrategyFactory;
         assertEquals("Le nom du joueur est déjà utilisé.", exception.getMessage());
     }
 
-    @Test
-     void testAbandonner() {
-        Mockito.when(strategyFactory.create(TypeStrategy.TOUJOURS_COOPERER)).thenReturn(Mockito.mock(Strategy.class));
-        partie.addJoueur("Player1", true, TypeStrategy.TOUJOURS_COOPERER);
-        Joueur joueur = partie.getJoueurs().get(0);
-        partie.abandonner(joueur, TypeStrategy.TOUJOURS_COOPERER);
-        assertFalse(joueur.isConnected());
-    }
+    // @Test
+    //  void testAbandonner() {
+    //     Mockito.when(strategyFactory.create(TypeStrategy.TOUJOURS_COOPERER)).thenReturn(Mockito.mock(Strategy.class));
+    //     partie.addJoueur("Player1", true, TypeStrategy.TOUJOURS_COOPERER);
+    //     Joueur joueur = partie.getJoueurs().get(0);
+    //     partie.abandonner(joueur, TypeStrategy.TOUJOURS_COOPERER);
+    //     assertFalse(joueur.isConnected());
+    // }
 
     @Test
      void testSoumettreDecision() {

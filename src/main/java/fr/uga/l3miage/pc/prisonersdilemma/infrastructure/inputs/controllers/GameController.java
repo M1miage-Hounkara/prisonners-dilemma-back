@@ -12,6 +12,7 @@ import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.Decision;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.enums.TypeStrategy;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.exceptions.GameNotInitializedException;
 import fr.uga.l3miage.pc.prisonersdilemma.domain.exceptions.MaximumPlayersReachedException;
+import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.requests.AbandonRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.requests.DecisionRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.requests.PseudoRequest;
 import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.requests.StartGameRequest;
@@ -19,6 +20,7 @@ import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.responses.CountD
 import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.responses.PlayerDecisionDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.responses.PlayerHistoryDTO;
 import fr.uga.l3miage.pc.prisonersdilemma.infrastructure.inputs.responses.SystemResponseDTO;
+
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 @RequestMapping("/api")
@@ -88,6 +90,7 @@ public class GameController {
         }
     }
 
+ 
     @PostMapping("/soumettre-decision")
     public ResponseEntity<SystemResponseDTO> soumettreDecision(@RequestBody DecisionRequest request) {
         try {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.WebProperties.Resources.Chain.Strategy;
 import org.springframework.stereotype.Service;
 
 import fr.uga.l3miage.pc.prisonersdilemma.application.ports.inputs.IPartieService;
@@ -46,13 +47,9 @@ public class PartiesService implements IPartieService {
         }
     }
 
-    public void abandonner(String pseudo, TypeStrategy typeStrategy) throws IllegalArgumentException, GameNotInitializedException {
+    public boolean abandonner(String pseudo, TypeStrategy strategy) throws IllegalArgumentException, GameNotInitializedException {
         Partie partie = getPartie();
-        Joueur joueur = partie.getJoueurs().stream()
-                .filter(j -> j.getName().equals(pseudo))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Joueur non trouvé: " + pseudo));
-        partie.abandonner(joueur, typeStrategy);
+        return partie.abandonner(pseudo, strategy);
     }
 
     public boolean soumettreDecision(String pseudo, Decision decision) throws GameNotInitializedException {
@@ -65,6 +62,8 @@ public class PartiesService implements IPartieService {
         Partie partie = getPartie();
         return partie.isPartieTerminee();
      }
+    
+    
 
      public Integer getScore(String pseudo) throws GameNotInitializedException {
         Partie partie = getPartie();

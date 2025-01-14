@@ -11,7 +11,7 @@ import fr.uga.l3miage.pc.prisonersdilemma.domain.exceptions.MaximumPlayersReache
 public interface IPartieService {
     void demarrerPartie(int nbTours);
     void addPlayer(String pseudo, boolean isConnected, String strategy) throws MaximumPlayersReachedException, GameNotInitializedException;
-    void abandonner(String pseudo, TypeStrategy typeStrategy) throws IllegalArgumentException, GameNotInitializedException;
+    boolean abandonner(String pseudo, TypeStrategy typeStrategy) throws IllegalArgumentException, GameNotInitializedException;
     boolean soumettreDecision(String pseudo, Decision decision) throws GameNotInitializedException;
     boolean getGameStatus() throws GameNotInitializedException;
     Integer getScore(String pseudo) throws GameNotInitializedException;

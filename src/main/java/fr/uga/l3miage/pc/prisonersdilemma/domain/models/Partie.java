@@ -57,10 +57,6 @@ public class Partie {
         return joueurs.size();
     }
 
-    public void abandonner(Joueur joueur, TypeStrategy typeStrategy) {
-        joueur.setConnected(false);
-        joueur.setStrategy(strategyFactory.create(typeStrategy));
-    }
 
 
     public synchronized boolean soumettreDecision(String pseudo, Decision decision) {
@@ -77,17 +73,31 @@ public class Partie {
             int historiqueDecisionsMapSize1 = historiqueDecisionsMap.get(joueur1.getName()).size();
             int historiqueDecisionsMapSize2 = joueur2 != null ? historiqueDecisionsMap.get(joueur2.getName()).size() : 0;
     
-            if (joueur1.getName().equals(pseudo) && historiqueDecisionsMapSize1 < tourActuel) {
+            if (joueur1.getName().equals(pseudo) && historiqueDecisionsMapSize1 < tourActuel && joueur1.isConnected()) {
                 joueur1.setDecision(decision);
                 historiqueDecisionsMapSize1++;
                 historiqueDecisionsMap.get(joueur1.getName()).add(decision);
 
             }
-            if (joueur2 != null && joueur2.getName().equals(pseudo) && historiqueDecisionsMapSize2 < tourActuel) {
+            else if (!joueur1.isConnected()) {
+                Decision decision1 = joueur1.getStrategy().execute(historiqueDecisionsMap.get(joueur1.getName()),historiqueDecisionsMap.get(joueur2.getName()));
+                joueur1.setDecision(decision1);
+                historiqueDecisionsMapSize1++;
+                historiqueDecisionsMap.get(joueur1.getName()).add(decision1);
+            }
+            if (joueur2 != null && joueur2.getName().equals(pseudo) && historiqueDecisionsMapSize2 < tourActuel && joueur2.isConnected()) {
                 joueur2.setDecision(decision);
                 historiqueDecisionsMapSize2++;
                 historiqueDecisionsMap.get(joueur2.getName()).add(decision);
             }
+            else if (!joueur2.isConnected()) {
+                Decision decision2 = joueur1.getStrategy().execute(historiqueDecisionsMap.get(joueur1.getName()),historiqueDecisionsMap.get(joueur2.getName()));
+                joueur2.setDecision(decision2);
+                historiqueDecisionsMapSize1++;
+                historiqueDecisionsMap.get(joueur2.getName()).add(decision2);
+            }
+
+
     
             if (historiqueDecisionsMapSize1 == tourActuel && historiqueDecisionsMapSize2  == tourActuel) {
                 processRound(joueur1, joueur2);
@@ -100,6 +110,24 @@ public class Partie {
         } finally {
             processingDecisions = false; 
         }
+    }
+
+    public synchronized boolean abandonner(String pseudo,TypeStrategy strategy) {
+        Joueur joueur = joueurs.stream()
+                .filter(j -> j.getName().equals(pseudo))
+                .findFirst()
+                .orElse(null);
+        joueur.setConnected(false);
+        joueur.setStrategy(strategyFactory.create(strategy));
+        Joueur otherPlayer = joueurs.stream()
+                .filter(j -> !j.getName().equals(pseudo))
+                .findFirst()
+                .orElse(null);
+        if (otherPlayer.isConnected() && otherPlayer.getDecision() != null) {
+            soumettreDecision(pseudo, null);
+            
+        }
+        return true;
     }
     
     
