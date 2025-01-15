@@ -80,7 +80,7 @@ public class Partie {
                 historiqueDecisionsMap.get(joueur1.getName()).add(decision);
 
             }
-            else if (joueur1 != null && !joueur1.isConnected()) {
+            else if (!joueur1.isConnected() && joueur2!=null) {
                 Decision decision1 = joueur1.getStrategy().execute(historiqueDecisionsMap.get(joueur1.getName()),historiqueDecisionsMap.get(joueur2.getName()));
                 joueur1.setDecision(decision1);
                 historiqueDecisionsMapSize1++;
@@ -117,13 +117,13 @@ public class Partie {
         Joueur joueur = joueurs.stream()
                 .filter(j -> j.getName().equals(pseudo))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalArgumentException("Player with pseudo " + pseudo + " not found."));
         joueur.setConnected(false);
         joueur.setStrategy(strategyFactory.create(strategy));
         Joueur otherPlayer = joueurs.stream()
                 .filter(j -> !j.getName().equals(pseudo))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new IllegalStateException("Other player not found."));
         if (otherPlayer.isConnected() && otherPlayer.getDecision() != null) {
             soumettreDecision(pseudo, null);
             
@@ -206,65 +206,69 @@ public class Partie {
 
     public synchronized boolean getDecisionOfOtherPlayer(String pseudo) {
         if (processingDecisions) {
-            System.out.println("Decisions are still being processed. Try again later.");
             return false;
         }
-
-
-        Joueur joueur1 = joueurs.get(0);
-        Joueur joueur2 = joueurs.size() > 1 ? joueurs.get(1) : null;
-
-        int historiqueDecisionsMapSize1 = historiqueDecisionsMap.get(joueur1.getName()).size();
-        int historiqueDecisionsMapSize2 = joueur2 != null ? historiqueDecisionsMap.get(joueur2.getName()).size() : 0;
-
     
-    
-        Joueur requestingPlayer = joueurs.stream()
-                .filter(j -> j.getName().equals(pseudo))
-                .findFirst()
-                .orElse(null);
-    
+        Joueur requestingPlayer = findPlayerByName(pseudo);
         if (requestingPlayer == null) {
             return false;
         }
     
-        Joueur otherPlayer = joueurs.stream()
-                .filter(j -> !j.getName().equals(pseudo))
-                .findFirst()
-                .orElse(null);
-    
+        Joueur otherPlayer = findOtherPlayer(pseudo);
         if (otherPlayer == null) {
             return false;
         }
     
         List<Decision> historique = historiqueDecisionsMap.get(otherPlayer.getName());
+        if (isHistoriqueInvalid(historique)) {
+            return false;
+        }
     
-        if (historique == null || historique.isEmpty()) {
+        if (tourActuel <= 1) {
             return false;
         }
-
-
     
-        if (tourActuel > 1) { 
-            
-        int previousTurnIndex = tourActuel - 2; 
-        if (previousTurnIndex >= historique.size() || historique.get(previousTurnIndex) == null) {
+        int previousTurnIndex = tourActuel - 2;
+        if (!isValidDecision(historique, previousTurnIndex)) {
             return false;
         }
-        
-            if (historiqueDecisionsMapSize1 == historiqueDecisionsMapSize2) {
-                if (historiqueDecisionsMapSize1 == historiqueDecisionsMapSize2 && historiqueDecisionsMapSize1 == nbTours) {
-                    partieTerminee = true;
-                    
-                }        
-                return true;
-            }
-            else {
-                return false;
-            }
-        } else {
-            return false;
+    
+        if (isGameComplete()) {
+            partieTerminee = true;
         }
+    
+        return true;
+    }
+    
+    private Joueur findPlayerByName(String pseudo) {
+        return joueurs.stream()
+                .filter(j -> j.getName().equals(pseudo))
+                .findFirst()
+                .orElse(null);
+    }
+    
+    private Joueur findOtherPlayer(String pseudo) {
+        return joueurs.stream()
+                .filter(j -> !j.getName().equals(pseudo))
+                .findFirst()
+                .orElse(null);
+    }
+    
+    private boolean isHistoriqueInvalid(List<Decision> historique) {
+        return historique == null || historique.isEmpty();
+    }
+    
+    private boolean isValidDecision(List<Decision> historique, int index) {
+        return index < historique.size() && historique.get(index) != null;
+    }
+    
+    private boolean isGameComplete() {
+        int historiqueSize1 = historiqueDecisionsMap.get(joueurs.get(0).getName()).size();
+        int historiqueSize2 = joueurs.size() > 1 
+                ? historiqueDecisionsMap.get(joueurs.get(1).getName()).size()
+                : 0;
+    
+        return historiqueSize1 == historiqueSize2 && historiqueSize1 == nbTours;
     }
     
 

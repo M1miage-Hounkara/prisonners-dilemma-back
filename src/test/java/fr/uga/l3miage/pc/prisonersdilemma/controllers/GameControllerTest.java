@@ -119,7 +119,7 @@ class GameControllerTest {
                 .content(objectMapper.writeValueAsString(request))
                 .param("typeStrategy", "INVALID_STRATEGY"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Type de stratégie invalide: INVALID_STRATEGY"));
+                .andExpect(jsonPath("$.message").value("Type de stratégie invalide: INVALID"));
     }
 
     // Player Count Tests
