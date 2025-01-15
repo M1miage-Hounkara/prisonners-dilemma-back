@@ -66,8 +66,9 @@ public class GameController {
     }
 
     @PostMapping("/abandon")
-    public ResponseEntity<SystemResponseDTO> abandon(@RequestBody PseudoRequest request, @RequestParam String typeStrategy) {
+    public ResponseEntity<SystemResponseDTO> abandon(@RequestBody AbandonRequest request) {
         String pseudo = request.getPseudo();
+        String typeStrategy = request.getStrategy();
         try {
             partiesService.abandonner(pseudo, TypeStrategy.valueOf(typeStrategy));
             return ResponseEntity.ok(new SystemResponseDTO(

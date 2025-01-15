@@ -9,5 +9,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AbandonRequest {
     private String pseudo;
-    private Strategy strategy;
+    private String strategy;
 }
