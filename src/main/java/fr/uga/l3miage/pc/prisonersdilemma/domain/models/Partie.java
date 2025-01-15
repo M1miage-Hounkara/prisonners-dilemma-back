@@ -92,9 +92,9 @@ public class Partie {
                 historiqueDecisionsMap.get(joueur2.getName()).add(decision);
             }
             else if (joueur2 != null && !joueur2.isConnected()) {
-                Decision decision2 = joueur1.getStrategy().execute(historiqueDecisionsMap.get(joueur1.getName()),historiqueDecisionsMap.get(joueur2.getName()));
+                Decision decision2 = joueur2.getStrategy().execute(historiqueDecisionsMap.get(joueur1.getName()),historiqueDecisionsMap.get(joueur2.getName()));
                 joueur2.setDecision(decision2);
-                historiqueDecisionsMapSize1++;
+                historiqueDecisionsMapSize2++;
                 historiqueDecisionsMap.get(joueur2.getName()).add(decision2);
             }
 
