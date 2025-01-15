@@ -124,7 +124,8 @@ public class Partie {
                 .filter(j -> !j.getName().equals(pseudo))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Other player not found."));
-        if (otherPlayer.isConnected() && otherPlayer.getDecision() != null) {
+        int historiqueDecisionsMapSize1 = historiqueDecisionsMap.get(otherPlayer.getName()).size();
+        if (otherPlayer.isConnected() && historiqueDecisionsMapSize1 == tourActuel) {
             soumettreDecision(pseudo, null);
             
         }
